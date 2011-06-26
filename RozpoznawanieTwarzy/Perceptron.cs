@@ -9,12 +9,12 @@ namespace RozpoznawanieTwarzy
 {
     class Perceptron
     {
-        double learningRate { get; set; }      // współczynnik uczenia
-        double momentum { get; set; }          // współczynnik momentum
-        double sigmoidAlphaValue { get; set; } // współczynnik alfa funkcji sigmoidalnej (funkcji aktywacji)
-        int neuronsInFirstLayer { get; set; }  // ilość neuronów w warstwie ukrytej
-        double errorRate { get; set; }         // margines błędu
-        ActivationNetwork network;             // sieć neuronowa
+        public double learningRate { get; set; }      // współczynnik uczenia
+        public double momentum { get; set; }          // współczynnik momentum
+        public double sigmoidAlphaValue { get; set; } // współczynnik alfa funkcji sigmoidalnej (funkcji aktywacji)
+        public int neuronsInFirstLayer { get; set; }  // ilość neuronów w warstwie ukrytej
+        public double errorRate { get; set; }         // margines błędu
+        ActivationNetwork network;                    // sieć neuronowa
 
         public Perceptron() {}
 
@@ -30,8 +30,8 @@ namespace RozpoznawanieTwarzy
         {
             if (input.Length == output.Length)
             {
-                int samples = input.Length;
-                this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input.Length, this.neuronsInFirstLayer, 1);
+                double samples = (double)input.Length;
+                this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input.Length, this.neuronsInFirstLayer);
                 BackPropagationLearning teacher = new BackPropagationLearning(network);
                 teacher.LearningRate = this.learningRate;
                 teacher.Momentum = this.momentum;

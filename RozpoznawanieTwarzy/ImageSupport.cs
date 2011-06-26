@@ -34,7 +34,7 @@ namespace RozpoznawanieTwarzy
             Bitmap tmp;
             if ((tmp = GetSample(xOffset, yOffset)) != null)
             {
-                result = new double[this.learningSampleWidth * this.learningSampleHeight];
+                result = new double[tmp.Width * tmp.Height];
                 for (int i = 0; i < tmp.Width; i++)
                     for (int j = 0; j < tmp.Height; j++)
                         result[i * tmp.Width + j] = (double)tmp.GetPixel(i, j).R;
@@ -43,6 +43,23 @@ namespace RozpoznawanieTwarzy
             {
                 result = null;
             }
+            return result;
+        }
+
+        public double[] GetLearningSample(Rectangle field)
+        {
+            double[] result;
+            Bitmap tmp;
+            if (field.X + field.Width <= this.image.Width && field.Y + field.Height <= this.image.Height)
+            {
+                tmp = ImageSupport.ResizeBitmap(ImageSupport.CropBitmap(this.image, field.X, field.Y, field.Width, field.Height), this.learningSampleWidth, this.learningSampleHeight);
+                result = new double[tmp.Width * tmp.Height];
+                for (int i = 0; i < tmp.Width; i++)
+                    for (int j = 0; j < tmp.Height; j++)
+                        result[i * tmp.Width + j] = (double)tmp.GetPixel(i, j).R;
+            }
+            else
+                result = null;
             return result;
         }
 
@@ -89,7 +106,7 @@ namespace RozpoznawanieTwarzy
             if (xOffset * this.offsetStep + this.sampleWidth <= this.image.Width &&
                 yOffset * this.offsetStep + this.sampleHeight <= this.image.Height)
             {
-                result = ImageSupport.CropBitmap(this.image, xOffset * this.offsetStep, yOffset * this.offsetStep, this.sampleWidth, this.sampleHeight);
+                result = ImageSupport.ResizeBitmap(ImageSupport.CropBitmap(this.image, xOffset * this.offsetStep, yOffset * this.offsetStep, this.sampleWidth, this.sampleHeight), this.learningSampleWidth, this.learningSampleHeight);
             }
             else
             {
@@ -152,8 +169,8 @@ namespace RozpoznawanieTwarzy
         {
             double[] result = new double[input.Length];
             double sum = 0.0;
-            foreach (double i in input)
-                sum += Math.Pow(i, 2.0);
+            foreach (double e in input)
+                sum += Math.Pow(e, 2.0);
             for (int i = 0; i < input.Length; i++)
                 result[i] = input[i] / Math.Sqrt(sum);
             return result;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Approximation">
+</Property><Property Name="Solution File" Value="C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Approximation.sln">
+</Property><Property Name="Date" Value="26 czerwca 2011">
+</Property><Property Name="Time" Value="15:07">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="Approximation.sln" Description="File successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\Approximation.sln">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="Approximation.csproj" Description="Project file successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\Approximation.csproj">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="AssemblyInfo.cs" Description="File successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="MainForm.cs" Description="File successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\MainForm.cs">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="App.ico" Description="File successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="MainForm.resx" Description="File successfully backed up as C:\Users\majkey\Desktop\rozpoznawanie_twarzy\neuro_src\Samples\Neuro\Back Propagation\Approximation\Backup\MainForm.resx">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="Approximation.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Approximation" Source="Approximation.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Approximation.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Approximation.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Approximation" Source="Approximation.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
