@@ -28,6 +28,12 @@ namespace RozpoznawanieTwarzy
             this.offsetStep = 8;
         }
 
+        /*
+         * Pobiera próbkę uczącą sieć.
+         * Próbka jest konkatenacją wierszy. Wartości próbki to wartości poszczególnych pikselów.
+         *   int xOffset - przesunięcie ramki w poziomie
+         *   int yOffset - przesunięcie ramki w pionie
+         */
         public double [] GetLearningSample(int xOffset, int yOffset)
         {
             double [] result;
@@ -46,6 +52,11 @@ namespace RozpoznawanieTwarzy
             return result;
         }
 
+        /*
+         * Pobiera próbkę uczącą sieć.
+         * Próbka jest konkatenacją wierszy. Wartości próbki to wartości poszczególnych pikselów.
+         *   Rectangle field - obszar z ktrego została pobrana próbka.
+         */
         public double[] GetLearningSample(Rectangle field)
         {
             double[] result;
@@ -150,7 +161,7 @@ namespace RozpoznawanieTwarzy
             return result;
         }
 
-       /*
+        /*
         * Dorysowuje obramowanie ramki przesuwnej do this.resultImage.
         *   int xOffset - przesunięcie ramki w poziomie
         *   int yOffset - przesunięcie ramki w pionie

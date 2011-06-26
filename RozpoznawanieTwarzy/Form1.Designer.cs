@@ -65,7 +65,6 @@
             this.loadImageButton = new System.Windows.Forms.Button();
             this.openImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.openImagesDialog = new System.Windows.Forms.OpenFileDialog();
-            this.infoLabel = new System.Windows.Forms.Label();
             this.statusBar.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -108,7 +107,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.infoLabel);
             this.tabPage1.Controls.Add(this.learnNetworkButton);
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Controls.Add(this.resetImagesButton);
@@ -439,23 +437,13 @@
             // 
             // openImageDialog
             // 
-            this.openImageDialog.Filter = "Mapa bitowa|*.bmp|Wszystkie pliki|*.*";
+            this.openImageDialog.Filter = "Obraz PNG|*.png|Mapa bitowa|*.bmp|Wszystkie pliki|*.*";
             this.openImageDialog.Title = "Wybór obrazu";
             // 
             // openImagesDialog
             // 
-            this.openImagesDialog.FileName = "openImagesDialog";
-            this.openImagesDialog.Filter = "Mapa bitowa|*.bmp|Obraz PNG|*.png|Wszystkie pliki|*.*";
+            this.openImagesDialog.Filter = "Obraz PNG|*.png|Mapa bitowa|*.bmp|Wszystkie pliki|*.*";
             this.openImagesDialog.Multiselect = true;
-            // 
-            // infoLabel
-            // 
-            this.infoLabel.AutoSize = true;
-            this.infoLabel.Location = new System.Drawing.Point(6, 192);
-            this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(35, 13);
-            this.infoLabel.TabIndex = 8;
-            this.infoLabel.Text = "label9";
             // 
             // Form1
             // 
@@ -470,7 +458,6 @@
             this.statusBar.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picturesBox)).EndInit();
             this.groupBox3.ResumeLayout(false);
@@ -524,7 +511,6 @@
         private System.Windows.Forms.Button resetImagesButton;
         private System.Windows.Forms.OpenFileDialog openImagesDialog;
         private System.Windows.Forms.Button learnNetworkButton;
-        private System.Windows.Forms.Label infoLabel;
     }
 }
 

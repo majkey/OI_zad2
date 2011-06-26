@@ -159,8 +159,9 @@ namespace RozpoznawanieTwarzy
             double[][] output = new double[input.Length][];
             for (int i = 0; i < data.Count; i++)
             {
-                output[i] = new double[32 * 32];
-                for(int j = 0; j < 32 * 32; j++)
+                int size = 1;
+                output[i] = new double[size];
+                for(int j = 0; j < size; j++)
                     output[i][j] = 1.0;
             }
             // ustawienia sieci neuronowej

@@ -36,7 +36,7 @@ namespace RozpoznawanieTwarzy
                 teacher.LearningRate = this.learningRate;
                 teacher.Momentum = this.momentum;
                 int epoch = 0;
-                while (teacher.RunEpoch(input, output) / samples < this.errorRate) { epoch++; }
+                while (teacher.RunEpoch(input, output) < this.errorRate) { epoch++; }
                 return epoch;
             }
             else

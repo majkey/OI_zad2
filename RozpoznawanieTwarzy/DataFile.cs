@@ -11,6 +11,12 @@ namespace RozpoznawanieTwarzy
     {
         public List<Rectangle> data;
 
+        /*
+         * Pobiera z pliku listę współrzędnych.
+         * Współrzędne powinny być zapisane w pliku tekstowym, oddzielone spacjami (cztery współrzędne:
+         * po dwie współrzędne punktów kardynalnych prostokąta).
+         *   string filePath - ścieżka do pliku
+         */
         public DataFile(string filePath)
         {
             StreamReader streamReader = new StreamReader(filePath);
