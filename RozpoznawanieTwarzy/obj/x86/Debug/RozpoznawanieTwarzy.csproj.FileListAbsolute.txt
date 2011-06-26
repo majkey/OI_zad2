@@ -10,3 +10,15 @@ C:\Users\majkey\Desktop\rozpoznawanie_twarzy\RozpoznawanieTwarzy\bin\Debug\AForg
 C:\Users\majkey\Desktop\rozpoznawanie_twarzy\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.Form1.resources
 C:\Users\majkey\Desktop\rozpoznawanie_twarzy\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.exe
 C:\Users\majkey\Desktop\rozpoznawanie_twarzy\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.pdb
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.exe
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.pdb
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\bin\Debug\RozpoznawanieTwarzy.exe
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\bin\Debug\RozpoznawanieTwarzy.pdb
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.Controls.dll
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.dll
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.Neuro.dll
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.Form1.resources
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.Properties.Resources.resources
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\silquenarmo\Pulpit\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\GenerateResource.write.1.tlog

@@ -31,12 +31,12 @@ namespace RozpoznawanieTwarzy
             if (input.Length == output.Length)
             {
                 double samples = (double)input.Length;
-                this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input.Length, this.neuronsInFirstLayer);
+                this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input[0].Length, this.neuronsInFirstLayer, 1);
                 BackPropagationLearning teacher = new BackPropagationLearning(network);
                 teacher.LearningRate = this.learningRate;
                 teacher.Momentum = this.momentum;
                 int epoch = 0;
-                while (teacher.RunEpoch(input, output) < this.errorRate) { epoch++; }
+                while (teacher.RunEpoch(input, output) / samples < this.errorRate) { epoch++; }
                 return epoch;
             }
             else

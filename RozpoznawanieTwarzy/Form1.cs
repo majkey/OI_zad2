@@ -99,7 +99,11 @@ namespace RozpoznawanieTwarzy
             {
                 while ((sample = imsu.GetLearningSample(x, y)) != null)
                 {
-                    imsu.DrawFrameOnResultImage(x, y);
+                    if (Math.Abs(this.network.Eval(sample)[0] - 1) < this.learningRate * 2)
+                    {
+                        this.faceListBox.Items.Add("x = " + x.ToString() + "; y = " + y.ToString() + ";");
+                        imsu.DrawFrameOnResultImage(x, y);
+                    }
                     x++;
                 }
                 x = 0; y++;
@@ -141,7 +145,7 @@ namespace RozpoznawanieTwarzy
         private void learnNetworkButton_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            this.infoLabel.Text = "";
+            this.statusBarLabel.Text = "Przygotowywanie danych do obróbki...";
             // przygotowanie tablicy danych wejściowych
             double[][] input;
             List<double[]> data = new List<double[]>();
@@ -165,6 +169,7 @@ namespace RozpoznawanieTwarzy
                     output[i][j] = 1.0;
             }
             // ustawienia sieci neuronowej
+            this.statusBarLabel.Text = "Uczenie sieci...";
             this.network.learningRate = this.learningRate;
             this.network.momentum = this.momentum;
             this.network.sigmoidAlphaValue = this.sigmoidAlphaValue;
@@ -172,6 +177,7 @@ namespace RozpoznawanieTwarzy
             this.network.errorRate = this.errorRate;
             // uczenie sieci neuronowej
             this.network.Learn(input, output);
+            this.statusBarLabel.Text = "Sieć nauczona!";
             this.Cursor = Cursors.Default;
         }
 
