@@ -1,0 +1,119 @@
+\section{Cel}
+
+Celem zadania jest zbadanie, czy wykorzystanie sieci neuronowej jest mozliwe do skutecznej identyfikacji twarzy na zdjeciach, na których wystepujace twarze moga byc róznych rozmiarów, ustawionie w pionie (osoby stojace), z obrotem nieprzekraczajacym 30 stopni. Badana siec ma pracowac ze zdjeciami w 8-bitowej przestrzeni koloru. Przedmiotem badan jest znalezienie w³asciwej architektury sieci, sposób przygotowania zbioru uczacego, sposób nauki sieci, jak równiez sposób przetworzenia zdjec poddawanych identyfikacji twarzy przed ich analiza z wykorzystaniem sieci.
+
+\section{Wprowadzenie}
+
+\subsection{Perceptron}
+
+Perceptron jest sieci¹ neuronow¹ najprostszego typu.
+
+
+Idea perceptronu jest zawarta w nastêpuj¹cych zasadach:
+
+\begin{enumerate}
+  \item Elementem sk³adowym perceptronu jest sztuczny neuron, którego model matematyczny mo¿e byæ opisany funkcj¹ aktywacji. Najczêœciej u¿ywana funkcja aktywacji to funkcja sigmoidalna:
+
+\begin{equation}
+  f(\varphi) = \frac{1}{1 + \alpha e^{-\varphi}}
+\end{equation}
+
+gdzie $ \alpha $ to pewien wspó³czynnik stromoœci sigmoidy w miejscu jej ,,przegiêcia'' oraz $ e $ to podstawa logarytmu naturalnego. Zalet¹ sigmoidy jest fakt, ¿e jest ci¹g³a w dziedzinie liczb rzeczywistych oraz ró¿niczkowalna. Natomiast:
+
+\begin{equation}
+  \varphi = \displaystyle\sum_{i=1}^{m} x_i w_i - \theta
+\end{equation}
+
+gdzie $ x $ to wektor wejœciowy ($ x_i $ to $ i $-ta wspó³rzêdna tego wektora) , $ w $ to wektor wagowy, a $ \theta $ to wartoœæ progowa funkcji aktywacji.
+  \item Sieæ perceptronow¹ mo¿na podzieliæ jednoznacznie na œciœle uporz¹dkowane i roz³¹czne klasy elementów zwane warstwami, wœród których wyró¿niæ mo¿na warstwê wejœciow¹ i wyjœciow¹. Pozosta³e nosz¹ nazwê warstw ukrytych.
+  \item Perceptron nie zawiera po³¹czeñ pomiêdzy elementami nale¿¹cymi do tej samej warstwy.
+  \item Po³¹czenia pomiêdzy warstwami s¹ asymetryczne i skierowane zgodnie z ich uporz¹dkowaniem, tzn. od warstwy wejœciowej do pierwszej warstwy ukrytej, nastêpnie od pierwszej do drugiej warstwy ukrytej, itd. a¿ do warstwy wyjœciowej. Nie ma po³¹czeñ zwrotnych.
+\end{enumerate}
+
+\subsection{Algorytm wstecznej propagacji}
+
+Do znalezienia poprawnego rozwiazania za pomoca metody on-line wykorzystano algorytm wstecznej propagacji b³edu. Oto jego tresc:
+
+\begin{enumerate}
+  \item Wybierz niewielk¹ wartoœæ kroku nauki $ \eta $ (np. $ \eta = 0.7 $), zaœ pocz¹tkowe wartosci wszystkich wag sieci wybierz jako ma³e liczby losowe (np. z przedzia³u $ [-1,1] $).
+  \item Wybierz losowo wzorzec uczacy $ ([v_{1\mu_0}^{0}, \ldots, v_{m_0\mu_0}^{0}],[z_{1\mu_0}, \ldots, z_{m_0\mu_0}]) \in \Omega; \mu_0 \in \{1, \ldots, N\} $ ze zbioru treningowego i przepusc sygna³y wejsciowe $ v_{1\mu_0}^{0}, \ldots, v_{m_0\mu_0}^{0} $ przez siec w przód wyznaczajac i zapamietujac wyjscia $ v_{i\mu_0}^{k} $ i sumy wa¿one $ \varphi_{i\mu_0}^{k} $ dla wszystkich neuronów sieci.
+  \item Oblicz sygna³y zwrotne $ \delta_{i\mu_0}^{n} $ dla wszystkich neuronów warstwy wyjsciowej sieci korzystajac ze wzoru:
+    \begin{equation}
+      \delta_{i\mu_0}^{n} = f'(\varphi_{i\mu_0}^{n})(z_{i\mu_0} - v_{i\mu_0}^{n})
+    \end{equation}
+    dla $ i = 1, \ldots, m_n $.
+  \item Oblicz sygna³y zwrotne $ \delta_{i\mu_0}^{k} $ wszystkich neuronów warstw poprzednich sieci propagujac te sygna³y kolejno wstecz sieci poczynajac od warstwy $ n - 1 $ az do warstwy $ 1 $ za pomoca wzoru:
+    \begin{equation}
+      \delta_{i\mu_0}^{k} = f'(\varphi_{i\mu_0}) \displaystyle\sum_{j=1}^{m_{k + 1}} w_{ij}^{k+1} \delta_{j\mu_0}^{k+1}
+    \end{equation}
+    dla $ i = 1, \ldots, m_k $ oraz $ k = n - 1, \ldots, 1 $.
+  \item Korzystajac z wyznaczonych i zapamietanych w punktach 2) - 4) wielkosci
+wyjsc $ v_{i\mu_0}^{k} $ i sygna³ów zwrotnych $ \delta_{i\mu_0}^{k+1} $ neuronów sieci dokonaj zmiany kazdej z wag uczonej sieci wed³ug wzoru:
+    \begin{equation}
+      w_{pq}^{k} = w_{pq}^{k} + \eta \delta_{p\mu_0}^{k} v_{q\mu_0}^{k-1}
+    \end{equation}
+    dla $ p = 1, \ldots, m_k; q = 1, \ldots, m_{k-1}; k = 1, \ldots, n $.
+  \item Jesli nie wyczerpano wszystkich wzorców uczacych ze zbioru to wybierz losowo kolejnych wzorzec, niepodawany jeszcze na wejscie sieci, i przejdz do punktu 2), w przeciwnym razie idz do punktu 7).
+  \item Czy siec odtwarza z za³ozona dok³adnoscia kazdy ze wzorców treningowych? Jesli tak to koniec. W przeciwnym razie rozpocznij kolejna epoke nauczania sieci przechodzac do punktu 2).
+\end{enumerate}
+
+\section{Opis implementacji}
+
+\subsection{Technologie}
+
+\subsubsection{Jêzyk programowania C\#}
+
+Do zrealizowania celów zadania wybra³am jêzyk C\#. Jest to jêzyk umo¿liwiaj¹cy rozwi¹zania wysokopoziomowe przy wykorzystaniu paradygmatów programowania obiektowego i komponentowego. Jest on wystarczaj¹co szybki a standardwe biblioteki wbudowane w œrodowisko zapewniaj¹ ³atwoœæ realizacji algorytmów.
+
+\subsubsection{Biblioteka \texttt{Neural Networks on C\#}}
+
+Biblioteka ta zapewnia obróbkê danych przy pomocy sieci neuronowych, takich jak perceptron czy samoorganizuj¹ce siê mapy. Jest ona zdecydowanie szybsza (dziêki rozwi¹zaniom optymalizuj¹cym) od standardowej, akademickiej implementacji.
+
+
+Bibliotekê wraz z pe³n¹ dokumentacj¹ i przyk³adami mo¿na pobraæ z witryny CodeProject (\url{http://www.codeproject.com}) pod adresem \url{http://www.codeproject.com}.
+
+\subsection{Rozwi¹zania}
+
+\subsubsection{Opis metody rozpoznawania twarzy}
+
+Algorytm rozpoznawania twarzy zaimplementowany w mojej aplikacji jest nastêpuj¹cy:
+
+\begin{enumerate}
+  \item Uczenie sieci neuronowej:
+  \begin{enumerate}
+    \item aplikacja wczytuje obrazy cyfrowe wskazane przez u¿ytkownika oraz zamienia je na obrazy w skali szaroœci,
+    \item aplikacja wczytuje tak¿e wspó³rzêdne zaznaczonych w obrazach twarzy (prostok¹ty),
+    \item prostok¹ty zawieraj¹ce twarze wycinane s¹ z obrazów oraz skalowane do rozmiaru $ 32 \times 32 $,
+    \item tak przygotowane próbki konwertowane s¹ na jednowymiarowy wektor -- wiersze obrazów-próbek s¹ konkatenowane (otrzymujemy wektor d³ugoœci $ 32 \cdot 32 = 1024 $ zawieraj¹cy wartoœci pikselów),
+    \item wektor jest normalizowany,
+    \item wektorom tym przypisywana jest wartoœæ $ 1 $, jako oczekiwana wartoœæ wyjœciowa,
+    \item perceptron uczony jest algorytmem wstecznej propagacji, dopuki ogolny b³¹d sieci nie spadnie poni¿ej pewnego zadanego marginesu b³êdu.
+  \end{enumerate}
+  \item Rozpoznawanie twarzy:
+  \begin{enumerate}
+    \item wczytany obraz konwertowany jest na obraz w skali szaroœci,
+    \item ustalana jest wielkoœæ ramki przesuwnej,
+    \item ramka przesuwna porusza siê po obrazie wycinaj¹c z niego fragment oraz skaluj¹c do rozmiaru $ 32 \times 32 $,
+    \item tak pobrana próbka zamienina jest na znormalizowany wektor wejœciowy (patrz wy¿ej),
+    \item obliczana jest wartoœæ wyjœciowa sieci neuronowej przy zadanym wektorze,
+    \item w przypadku, gdy wartoœæ wyjœciowa perceptronu jest bliska $ 1 $ wtedy uznaje siê ¿e próbka zawiera twarz -- ramka zaznaczana jest na obrazie.
+  \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Aspekty implementacji}
+
+Projekt zawiera nastepuj¹ce klasy:
+
+\begin{enumerate}
+  \item \texttt{DataFile} -- klasa obs³uguj¹ca pliki tekstowe zawieraj¹ce wspó³rzêdne twarzy do uczenia;
+  \item \texttt{Perceptron} -- klasa wykorzystuj¹ca zewnêtrzn¹ bibliotekê do uczenia i ewaluacji wartoœci sieci neuronowej (perceptronu);
+  \item \texttt{ImageSupport} -- klasa zapewniaj¹ca edycjê obrazu cyfrowego oraz wykorzystanie mechanizmu ranki przesuwnej.
+\end{enumerate}
+
+\subsection{Trudnoœci}
+
+G³ówn¹ trudnoœci¹ by³a implementacja zapisu i odczytu nauczonej sieci neuronowej do pliku. Ostatecznie funkcjonalnoœæ ta nie zosta³a zrealizowana, co znacznie utrudnia ponowne przeprowadzenie badañ (sieæ neuronowa musi byæ przy ka¿dym uruchomieniu programu uczona na nowo.
+
+
+Metoda Bruteforce zrealizowana przy pomocy mechanizmu przesuwnej ramki jest niezwykle powolna, zatem zastosowa³am mo¿liwoœæ rêcznego ustawienia w³aœciwoœci takiej ramki (rozmiar, krok). Ogranicza to rozwi¹zanie tylko do zadanych parametrow ramki, jednak¿e poszukiwania twarzy s¹ kontrolowane przez u¿ytkownika.
+
