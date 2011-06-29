@@ -139,11 +139,7 @@ namespace RozpoznawanieTwarzy
             {
                 for (int i = 0; i < this.sampleWidth; i++)
                 {
-                    Color color;
-                    if (i % 2 == 0)
-                        color = Color.Black;
-                    else
-                        color = Color.White;
+                    Color color = Color.Black;
                     result.SetPixel(xOffset * this.offsetStep + i, yOffset * this.offsetStep, color);
                     result.SetPixel(xOffset * this.offsetStep + i, yOffset * this.offsetStep + this.sampleHeight, color);
                 }

@@ -30,8 +30,11 @@
         {
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.statusBarLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.saveNetworkToFileButton = new System.Windows.Forms.Button();
+            this.loadNetworkFromFileButton = new System.Windows.Forms.Button();
             this.learnNetworkButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.picturesBox = new System.Windows.Forms.PictureBox();
@@ -65,6 +68,8 @@
             this.loadImageButton = new System.Windows.Forms.Button();
             this.openImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.openImagesDialog = new System.Windows.Forms.OpenFileDialog();
+            this.loadNetworkFromFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveNetworkToFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.statusBar.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -80,7 +85,8 @@
             // statusBar
             // 
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusBarLabel});
+            this.statusBarLabel,
+            this.toolStripProgressBar1});
             this.statusBar.Location = new System.Drawing.Point(0, 405);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(704, 22);
@@ -91,6 +97,11 @@
             // 
             this.statusBarLabel.Name = "statusBarLabel";
             this.statusBarLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
             // tabControl1
             // 
@@ -107,6 +118,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.saveNetworkToFileButton);
+            this.tabPage1.Controls.Add(this.loadNetworkFromFileButton);
             this.tabPage1.Controls.Add(this.learnNetworkButton);
             this.tabPage1.Controls.Add(this.panel2);
             this.tabPage1.Controls.Add(this.resetImagesButton);
@@ -121,10 +134,31 @@
             this.tabPage1.Text = "uczenie sieci";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // saveNetworkToFileButton
+            // 
+            this.saveNetworkToFileButton.Enabled = false;
+            this.saveNetworkToFileButton.Location = new System.Drawing.Point(6, 229);
+            this.saveNetworkToFileButton.Name = "saveNetworkToFileButton";
+            this.saveNetworkToFileButton.Size = new System.Drawing.Size(258, 28);
+            this.saveNetworkToFileButton.TabIndex = 9;
+            this.saveNetworkToFileButton.Text = "zapisz sieć";
+            this.saveNetworkToFileButton.UseVisualStyleBackColor = true;
+            this.saveNetworkToFileButton.Click += new System.EventHandler(this.saveNetworkToFileButton_Click);
+            // 
+            // loadNetworkFromFileButton
+            // 
+            this.loadNetworkFromFileButton.Location = new System.Drawing.Point(6, 161);
+            this.loadNetworkFromFileButton.Name = "loadNetworkFromFileButton";
+            this.loadNetworkFromFileButton.Size = new System.Drawing.Size(258, 28);
+            this.loadNetworkFromFileButton.TabIndex = 8;
+            this.loadNetworkFromFileButton.Text = "wczytaj sieć";
+            this.loadNetworkFromFileButton.UseVisualStyleBackColor = true;
+            this.loadNetworkFromFileButton.Click += new System.EventHandler(this.loadNetworkFromFileButton_Click);
+            // 
             // learnNetworkButton
             // 
             this.learnNetworkButton.Enabled = false;
-            this.learnNetworkButton.Location = new System.Drawing.Point(6, 161);
+            this.learnNetworkButton.Location = new System.Drawing.Point(6, 195);
             this.learnNetworkButton.Name = "learnNetworkButton";
             this.learnNetworkButton.Size = new System.Drawing.Size(258, 28);
             this.learnNetworkButton.TabIndex = 7;
@@ -228,6 +262,7 @@
             this.sigmoidAlphaValueTextBox.Name = "sigmoidAlphaValueTextBox";
             this.sigmoidAlphaValueTextBox.Size = new System.Drawing.Size(100, 20);
             this.sigmoidAlphaValueTextBox.TabIndex = 6;
+            this.sigmoidAlphaValueTextBox.Text = "0,9";
             this.sigmoidAlphaValueTextBox.TextChanged += new System.EventHandler(this.sigmoidAlphaValueTextBox_TextChanged);
             // 
             // label6
@@ -245,6 +280,7 @@
             this.errorRateTextBox.Name = "errorRateTextBox";
             this.errorRateTextBox.Size = new System.Drawing.Size(100, 20);
             this.errorRateTextBox.TabIndex = 6;
+            this.errorRateTextBox.Text = "0,01";
             this.errorRateTextBox.TextChanged += new System.EventHandler(this.errorRateTextBox_TextChanged);
             // 
             // neuronsInFirstLayerTextBox
@@ -253,6 +289,7 @@
             this.neuronsInFirstLayerTextBox.Name = "neuronsInFirstLayerTextBox";
             this.neuronsInFirstLayerTextBox.Size = new System.Drawing.Size(100, 20);
             this.neuronsInFirstLayerTextBox.TabIndex = 8;
+            this.neuronsInFirstLayerTextBox.Text = "1024";
             this.neuronsInFirstLayerTextBox.TextChanged += new System.EventHandler(this.neuronsInFirstLayerTextBox_TextChanged);
             // 
             // label5
@@ -270,6 +307,7 @@
             this.momentumTextBox.Name = "momentumTextBox";
             this.momentumTextBox.Size = new System.Drawing.Size(100, 20);
             this.momentumTextBox.TabIndex = 6;
+            this.momentumTextBox.Text = "0,6";
             this.momentumTextBox.TextChanged += new System.EventHandler(this.momentumTextBox_TextChanged);
             // 
             // label4
@@ -287,6 +325,7 @@
             this.learningRateTextBox.Name = "learningRateTextBox";
             this.learningRateTextBox.Size = new System.Drawing.Size(100, 20);
             this.learningRateTextBox.TabIndex = 4;
+            this.learningRateTextBox.Text = "0,9";
             this.learningRateTextBox.TextChanged += new System.EventHandler(this.learningRateTextBox_TextChanged);
             // 
             // tabPage2
@@ -445,6 +484,10 @@
             this.openImagesDialog.Filter = "Obraz PNG|*.png|Mapa bitowa|*.bmp|Wszystkie pliki|*.*";
             this.openImagesDialog.Multiselect = true;
             // 
+            // loadNetworkFromFileDialog
+            // 
+            this.loadNetworkFromFileDialog.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -511,6 +554,11 @@
         private System.Windows.Forms.Button resetImagesButton;
         private System.Windows.Forms.OpenFileDialog openImagesDialog;
         private System.Windows.Forms.Button learnNetworkButton;
+        private System.Windows.Forms.Button saveNetworkToFileButton;
+        private System.Windows.Forms.Button loadNetworkFromFileButton;
+        private System.Windows.Forms.OpenFileDialog loadNetworkFromFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveNetworkToFileDialog;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
 

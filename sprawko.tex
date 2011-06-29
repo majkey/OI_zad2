@@ -1,3 +1,22 @@
+\documentclass{classrep}
+\usepackage[utf8]{inputenc}
+
+\studycycle{Informatyka, studia dzienne, mgr II st.}
+\coursesemester{I}
+
+\coursename{Obliczenia inteligentne}
+\courseyear{2011/2012}
+
+\courseteacher{dr in¿. Arkadiusz Tomczyk}
+\coursegroup{œroda, 14:30}
+
+\author{\studentinfo{Maja Skowroñska}{}}
+
+\title{Zadanie 2: Rozpoznawanie twarzy}
+
+\begin{document}
+\maketitle
+
 \section{Cel}
 
 Celem zadania jest zbadanie, czy wykorzystanie sieci neuronowej jest mozliwe do skutecznej identyfikacji twarzy na zdjeciach, na których wystepujace twarze moga byc róznych rozmiarów, ustawionie w pionie (osoby stojace), z obrotem nieprzekraczajacym 30 stopni. Badana siec ma pracowac ze zdjeciami w 8-bitowej przestrzeni koloru. Przedmiotem badan jest znalezienie w³asciwej architektury sieci, sposób przygotowania zbioru uczacego, sposób nauki sieci, jak równiez sposób przetworzenia zdjec poddawanych identyfikacji twarzy przed ich analiza z wykorzystaniem sieci.
@@ -56,6 +75,10 @@ wyjsc $ v_{i\mu_0}^{k} $ i sygna³ów zwrotnych $ \delta_{i\mu_0}^{k+1} $ neuronów
   \item Jesli nie wyczerpano wszystkich wzorców uczacych ze zbioru to wybierz losowo kolejnych wzorzec, niepodawany jeszcze na wejscie sieci, i przejdz do punktu 2), w przeciwnym razie idz do punktu 7).
   \item Czy siec odtwarza z za³ozona dok³adnoscia kazdy ze wzorców treningowych? Jesli tak to koniec. W przeciwnym razie rozpocznij kolejna epoke nauczania sieci przechodzac do punktu 2).
 \end{enumerate}
+
+\subsection{Brute force}
+
+Algorytm si³owy, brute force, toalgorytm, który opiera siê na sukcesywnym sprawdzeniu wszystkich mo¿liwych kombinacji w poszukiwaniu rozwi¹zania problemu, zamiast skupiaæ siê na jego szczegó³owej analizie. Jest to zwykle nieoptymalna, ale najprostsza do zaimplementowania i najbardziej skuteczna metoda postêpowania (poniewa¿ teoretycznie pozwala ona z³amaæ ka¿de has³o – praktycznie mo¿e to potrwaæ nawet tysi¹ce i miliony lat). W zale¿noœci od kontekstu, w którym termin brute force zostaje u¿yty, mo¿e mieæ on nieznacznie ró¿ne definicje.
 
 \section{Opis implementacji}
 
@@ -117,3 +140,356 @@ G³ówn¹ trudnoœci¹ by³a implementacja zapisu i odczytu nauczonej sieci neuronowej
 
 Metoda Bruteforce zrealizowana przy pomocy mechanizmu przesuwnej ramki jest niezwykle powolna, zatem zastosowa³am mo¿liwoœæ rêcznego ustawienia w³aœciwoœci takiej ramki (rozmiar, krok). Ogranicza to rozwi¹zanie tylko do zadanych parametrow ramki, jednak¿e poszukiwania twarzy s¹ kontrolowane przez u¿ytkownika.
 
+\section{Wyniki}
+
+\subsection{Parametry sieci}
+
+\begin{enumerate}
+  \item wspó³czynnik uczenia $ \eta = 0.8 $;
+  \item wspó³czynnik momentum $ m = 0.5 $;
+  \item wspó³czynnik skoœnoœci funkcji sigmoidalnej $ \alpha = 1 $;
+  \item iloœæ neuronów w warstwie ukrytej $ n =  1024 $ (wartoœæ równa iloœci wejœæ sieci neuronowej).
+\end{enumerate}
+
+\subsection{Wyniki badañ}
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{|l|c|c|c|c|}
+    \hline
+    obraz & $ q $ & $ s $ & $ w $ & $ \frac{s}{q} $ \\
+    \hline
+    face001 & 3 & 1 & 10 & 0.333333 \\
+    face002 & 4 & 3 & 3 & 0.750000 \\
+    face003 & 1 & 0 & 7 & 0.000000 \\
+    face004 & 2 & 0 & 6 & 0.000000 \\
+    face005 & 3 & 0 & 1 & 0.000000 \\
+    face006 & 4 & 2 & 1 & 0.500000 \\
+    face007 & 2 & 0 & 10 & 0.000000 \\
+    face008 & 1 & 0 & 1 & 0.000000 \\
+    face009 & 3 & 0 & 9 & 0.000000 \\
+    face010 & 3 & 2 & 8 & 0.666667 \\
+    face011 & 2 & 0 & 3 & 0.000000 \\
+    face012 & 2 & 0 & 2 & 0.000000 \\
+    face013 & 3 & 2 & 7 & 0.666667 \\
+    face014 & 4 & 2 & 8 & 0.500000 \\
+    face015 & 3 & 0 & 2 & 0.000000 \\
+    face016 & 5 & 1 & 1 & 0.200000 \\
+    face017 & 1 & 0 & 6 & 0.000000 \\
+    face018 & 3 & 0 & 1 & 0.000000 \\
+    face019 & 4 & 3 & 10 & 0.750000 \\
+    face020 & 1 & 0 & 4 & 0.000000 \\
+    face021 & 1 & 0 & 9 & 0.000000 \\
+    face022 & 3 & 1 & 5 & 0.333333 \\
+    face023 & 2 & 0 & 5 & 0.000000 \\
+    face024 & 4 & 2 & 6 & 0.500000 \\
+    face025 & 5 & 1 & 3 & 0.200000 \\
+    face026 & 2 & 1 & 6 & 0.500000 \\
+    face027 & 2 & 1 & 5 & 0.500000 \\
+    face028 & 2 & 0 & 9 & 0.000000 \\
+    face029 & 5 & 1 & 7 & 0.200000 \\
+    face030 & 3 & 0 & 3 & 0.000000 \\
+    face031 & 2 & 1 & 1 & 0.500000 \\
+    face032 & 1 & 0 & 8 & 0.000000 \\
+    face033 & 3 & 0 & 4 & 0.000000 \\
+    face034 & 1 & 0 & 8 & 0.000000 \\
+    face035 & 3 & 1 & 5 & 0.333333 \\
+    face036 & 2 & 0 & 4 & 0.000000 \\
+    face037 & 3 & 1 & 9 & 0.333333 \\
+    face038 & 1 & 0 & 1 & 0.000000 \\
+    face039 & 2 & 1 & 9 & 0.500000 \\
+    face040 & 4 & 0 & 2 & 0.000000 \\
+    face041 & 5 & 4 & 6 & 0.800000 \\
+    face042 & 4 & 0 & 8 & 0.000000 \\
+    face043 & 4 & 1 & 9 & 0.250000 \\
+    face044 & 1 & 0 & 2 & 0.000000 \\
+    face045 & 2 & 0 & 4 & 0.000000 \\
+    face046 & 5 & 4 & 2 & 0.800000 \\
+    face047 & 1 & 0 & 7 & 0.000000 \\
+    face048 & 5 & 0 & 6 & 0.000000 \\
+    face049 & 1 & 0 & 3 & 0.000000 \\
+    face050 & 2 & 1 & 5 & 0.500000 \\
+    face051 & 3 & 2 & 10 & 0.666667 \\
+    face052 & 4 & 2 & 2 & 0.500000 \\
+    face053 & 4 & 0 & 2 & 0.000000 \\
+    face054 & 4 & 3 & 4 & 0.750000 \\
+    face055 & 4 & 1 & 4 & 0.250000 \\
+    face056 & 1 & 0 & 7 & 0.000000 \\
+    face057 & 5 & 3 & 6 & 0.600000 \\
+    face058 & 5 & 3 & 8 & 0.600000 \\
+    face059 & 3 & 0 & 8 & 0.000000 \\
+    face060 & 2 & 0 & 6 & 0.000000 \\
+    face061 & 1 & 0 & 1 & 0.000000 \\
+    face062 & 1 & 0 & 4 & 0.000000 \\
+    face063 & 5 & 3 & 3 & 0.600000 \\
+    face064 & 5 & 3 & 1 & 0.600000 \\
+    face065 & 4 & 1 & 2 & 0.250000 \\
+    face066 & 3 & 0 & 2 & 0.000000 \\
+    face067 & 2 & 0 & 1 & 0.000000 \\
+    face068 & 4 & 2 & 10 & 0.500000 \\
+    face069 & 2 & 1 & 2 & 0.500000 \\
+    face070 & 2 & 0 & 4 & 0.000000 \\
+    face071 & 5 & 2 & 4 & 0.400000 \\
+    face072 & 1 & 0 & 7 & 0.000000 \\
+    face073 & 3 & 1 & 9 & 0.333333 \\
+    face074 & 4 & 1 & 2 & 0.250000 \\
+    face075 & 3 & 1 & 3 & 0.333333 \\
+    face076 & 4 & 0 & 3 & 0.000000 \\
+    face077 & 5 & 3 & 9 & 0.600000 \\
+    face078 & 1 & 0 & 3 & 0.000000 \\
+    face079 & 5 & 4 & 6 & 0.800000 \\
+    face080 & 5 & 1 & 10 & 0.200000 \\
+    face081 & 4 & 3 & 2 & 0.750000 \\
+    face082 & 3 & 0 & 10 & 0.000000 \\
+    face083 & 4 & 0 & 10 & 0.000000 \\
+    face084 & 5 & 3 & 1 & 0.600000 \\
+    face085 & 2 & 1 & 8 & 0.500000 \\
+    face086 & 5 & 4 & 1 & 0.800000 \\
+    face087 & 5 & 3 & 5 & 0.600000 \\
+    face088 & 4 & 1 & 3 & 0.250000 \\
+    face089 & 2 & 0 & 4 & 0.000000 \\
+    face090 & 1 & 0 & 6 & 0.000000 \\
+    face091 & 4 & 0 & 9 & 0.000000 \\
+    face092 & 5 & 1 & 3 & 0.200000 \\
+    face093 & 3 & 1 & 1 & 0.333333 \\
+    face094 & 3 & 2 & 10 & 0.666667 \\
+    face095 & 3 & 1 & 7 & 0.333333 \\
+    face096 & 1 & 0 & 8 & 0.000000 \\
+    face097 & 5 & 1 & 6 & 0.200000 \\
+    face098 & 2 & 0 & 3 & 0.000000 \\
+    face099 & 3 & 0 & 6 & 0.000000 \\
+    face100 & 3 & 0 & 9 & 0.000000 \\
+    face101 & 1 & 0 & 8 & 0.000000 \\
+    face102 & 5 & 1 & 7 & 0.200000 \\
+    face103 & 3 & 2 & 4 & 0.666667 \\
+    face104 & 3 & 1 & 8 & 0.333333 \\
+    face105 & 1 & 0 & 2 & 0.000000 \\
+    face106 & 2 & 1 & 8 & 0.500000 \\
+    face107 & 5 & 1 & 4 & 0.200000 \\
+    face108 & 1 & 0 & 4 & 0.000000 \\
+    face109 & 4 & 3 & 10 & 0.750000 \\
+    face110 & 1 & 0 & 3 & 0.000000 \\
+    face111 & 2 & 1 & 9 & 0.500000 \\
+    face112 & 1 & 0 & 1 & 0.000000 \\
+    face113 & 1 & 0 & 5 & 0.000000 \\
+    face114 & 4 & 3 & 2 & 0.750000 \\
+    face115 & 4 & 2 & 4 & 0.500000 \\
+    face116 & 5 & 3 & 10 & 0.600000 \\
+    face117 & 5 & 0 & 7 & 0.000000 \\
+    face118 & 5 & 1 & 3 & 0.200000 \\
+    face119 & 3 & 0 & 3 & 0.000000 \\
+    face120 & 3 & 1 & 3 & 0.333333 \\
+    face121 & 5 & 0 & 2 & 0.000000 \\
+    face122 & 4 & 3 & 4 & 0.750000 \\
+    face123 & 5 & 4 & 4 & 0.800000 \\
+    face124 & 1 & 0 & 4 & 0.000000 \\
+    face125 & 2 & 0 & 10 & 0.000000 \\
+    face126 & 2 & 0 & 9 & 0.000000 \\
+    face127 & 4 & 2 & 8 & 0.500000 \\
+    face128 & 3 & 2 & 7 & 0.666667 \\
+    face129 & 3 & 1 & 5 & 0.333333 \\
+    face130 & 3 & 2 & 2 & 0.666667 \\
+    face131 & 2 & 1 & 3 & 0.500000 \\
+    face132 & 3 & 1 & 5 & 0.333333 \\
+    face133 & 4 & 2 & 2 & 0.500000 \\
+    face134 & 5 & 4 & 6 & 0.800000 \\
+    face135 & 4 & 0 & 2 & 0.000000 \\
+    face136 & 2 & 1 & 7 & 0.500000 \\
+    face137 & 3 & 2 & 2 & 0.666667 \\
+    face138 & 4 & 3 & 9 & 0.750000 \\
+    face139 & 4 & 1 & 9 & 0.250000 \\
+    face140 & 1 & 0 & 3 & 0.000000 \\
+    face141 & 1 & 0 & 4 & 0.000000 \\
+    face142 & 4 & 0 & 2 & 0.000000 \\
+    face143 & 3 & 1 & 1 & 0.333333 \\
+    face144 & 3 & 0 & 7 & 0.000000 \\
+    face145 & 3 & 0 & 4 & 0.000000 \\
+    face146 & 1 & 0 & 8 & 0.000000 \\
+    face147 & 1 & 0 & 10 & 0.000000 \\
+    face148 & 1 & 0 & 4 & 0.000000 \\
+    face149 & 2 & 1 & 8 & 0.500000 \\
+    face150 & 5 & 1 & 9 & 0.200000 \\
+    face151 & 5 & 0 & 6 & 0.000000 \\
+    face152 & 1 & 0 & 3 & 0.000000 \\
+    face153 & 4 & 1 & 9 & 0.250000 \\
+    face154 & 5 & 2 & 3 & 0.400000 \\
+    face155 & 2 & 1 & 8 & 0.500000 \\
+    face156 & 3 & 1 & 9 & 0.333333 \\
+    face157 & 4 & 2 & 4 & 0.500000 \\
+    face158 & 2 & 0 & 9 & 0.000000 \\
+    face159 & 4 & 0 & 1 & 0.000000 \\
+    face160 & 2 & 1 & 6 & 0.500000 \\
+    face161 & 2 & 0 & 8 & 0.000000 \\
+    face162 & 2 & 1 & 10 & 0.500000 \\
+    face163 & 5 & 0 & 7 & 0.000000 \\
+    face164 & 4 & 3 & 7 & 0.750000 \\
+    face165 & 5 & 1 & 7 & 0.200000 \\
+    face166 & 1 & 0 & 2 & 0.000000 \\
+    face167 & 4 & 2 & 3 & 0.500000 \\
+    face168 & 2 & 1 & 3 & 0.500000 \\
+    face169 & 3 & 1 & 1 & 0.333333 \\
+    face170 & 1 & 0 & 7 & 0.000000 \\
+    face171 & 2 & 1 & 10 & 0.500000 \\
+    face172 & 4 & 1 & 6 & 0.250000 \\
+    face173 & 5 & 2 & 9 & 0.400000 \\
+    face174 & 3 & 1 & 5 & 0.333333 \\
+    face175 & 3 & 1 & 3 & 0.333333 \\
+    face176 & 3 & 0 & 5 & 0.000000 \\
+    face177 & 1 & 0 & 6 & 0.000000 \\
+    face178 & 3 & 2 & 5 & 0.666667 \\
+    face179 & 5 & 4 & 7 & 0.800000 \\
+    face180 & 3 & 1 & 10 & 0.333333 \\
+    face181 & 1 & 0 & 3 & 0.000000 \\
+    face182 & 4 & 1 & 7 & 0.250000 \\
+    face183 & 5 & 4 & 3 & 0.800000 \\
+    face184 & 5 & 4 & 10 & 0.800000 \\
+    face185 & 5 & 2 & 10 & 0.400000 \\
+    face186 & 3 & 0 & 10 & 0.000000 \\
+    face187 & 3 & 1 & 9 & 0.333333 \\
+    face188 & 4 & 3 & 7 & 0.750000 \\
+    face189 & 2 & 0 & 3 & 0.000000 \\
+    face190 & 3 & 2 & 7 & 0.666667 \\
+    face191 & 1 & 0 & 2 & 0.000000 \\
+    face192 & 2 & 1 & 7 & 0.500000 \\
+    face193 & 3 & 0 & 10 & 0.000000 \\
+    face194 & 5 & 4 & 9 & 0.800000 \\
+    face195 & 4 & 0 & 7 & 0.000000 \\
+    face196 & 5 & 3 & 2 & 0.600000 \\
+    face197 & 3 & 2 & 9 & 0.666667 \\
+    face198 & 5 & 3 & 8 & 0.600000 \\
+    face199 & 2 & 1 & 5 & 0.500000 \\
+    face200 & 3 & 1 & 5 & 0.333333 \\
+    face201 & 4 & 2 & 2 & 0.500000 \\
+    face202 & 5 & 4 & 2 & 0.800000 \\
+    face203 & 5 & 1 & 5 & 0.200000 \\
+    face204 & 2 & 0 & 2 & 0.000000 \\
+    face205 & 1 & 0 & 7 & 0.000000 \\
+    face206 & 2 & 0 & 5 & 0.000000 \\
+    face207 & 1 & 0 & 1 & 0.000000 \\
+    face208 & 5 & 4 & 2 & 0.800000 \\
+    face209 & 5 & 4 & 2 & 0.800000 \\
+    face210 & 1 & 0 & 6 & 0.000000 \\
+    face211 & 5 & 0 & 5 & 0.000000 \\
+    face212 & 1 & 0 & 5 & 0.000000 \\
+    face213 & 4 & 0 & 3 & 0.000000 \\
+    face214 & 1 & 0 & 9 & 0.000000 \\
+    face215 & 5 & 3 & 1 & 0.600000 \\
+    face216 & 3 & 2 & 7 & 0.666667 \\
+    face217 & 3 & 2 & 10 & 0.666667 \\
+    face218 & 1 & 0 & 4 & 0.000000 \\
+    face219 & 3 & 2 & 1 & 0.666667 \\
+    face220 & 2 & 0 & 6 & 0.000000 \\
+    face221 & 5 & 0 & 4 & 0.000000 \\
+    face222 & 5 & 2 & 7 & 0.400000 \\
+    face223 & 5 & 3 & 5 & 0.600000 \\
+    face224 & 5 & 2 & 2 & 0.400000 \\
+    face225 & 4 & 2 & 5 & 0.500000 \\
+    face226 & 2 & 1 & 10 & 0.500000 \\
+    face227 & 2 & 1 & 4 & 0.500000 \\
+    face228 & 3 & 1 & 5 & 0.333333 \\
+    face229 & 4 & 1 & 6 & 0.250000 \\
+    face230 & 5 & 2 & 4 & 0.400000 \\
+    face231 & 1 & 0 & 7 & 0.000000 \\
+    face232 & 3 & 1 & 10 & 0.333333 \\
+    face233 & 4 & 1 & 9 & 0.250000 \\
+    face234 & 1 & 0 & 9 & 0.000000 \\
+    face235 & 4 & 3 & 10 & 0.750000 \\
+    face236 & 4 & 2 & 4 & 0.500000 \\
+    face237 & 2 & 1 & 2 & 0.500000 \\
+    face238 & 5 & 1 & 3 & 0.200000 \\
+    face239 & 2 & 1 & 1 & 0.500000 \\
+    face240 & 4 & 2 & 5 & 0.500000 \\
+    face241 & 4 & 2 & 3 & 0.500000 \\
+    face242 & 2 & 0 & 6 & 0.000000 \\
+    face243 & 4 & 0 & 4 & 0.000000 \\
+    face244 & 1 & 0 & 7 & 0.000000 \\
+    face245 & 3 & 1 & 5 & 0.333333 \\
+    face246 & 3 & 1 & 8 & 0.333333 \\
+    face247 & 3 & 1 & 4 & 0.333333 \\
+    face248 & 5 & 2 & 4 & 0.400000 \\
+    face249 & 5 & 3 & 5 & 0.600000 \\
+    face250 & 4 & 0 & 7 & 0.000000 \\
+    face251 & 2 & 0 & 1 & 0.000000 \\
+    face252 & 2 & 0 & 3 & 0.000000 \\
+    face253 & 1 & 0 & 7 & 0.000000 \\
+    face254 & 4 & 3 & 10 & 0.750000 \\
+    face255 & 2 & 0 & 4 & 0.000000 \\
+    face256 & 3 & 1 & 7 & 0.333333 \\
+    face257 & 2 & 0 & 10 & 0.000000 \\
+    face258 & 4 & 0 & 3 & 0.000000 \\
+    face259 & 5 & 3 & 3 & 0.600000 \\
+    face260 & 5 & 3 & 5 & 0.600000 \\
+    face261 & 2 & 1 & 3 & 0.500000 \\
+    face262 & 2 & 1 & 7 & 0.500000 \\
+    face263 & 1 & 0 & 4 & 0.000000 \\
+    face264 & 3 & 1 & 3 & 0.333333 \\
+    face265 & 4 & 3 & 3 & 0.750000 \\
+    face266 & 1 & 0 & 9 & 0.000000 \\
+    face267 & 3 & 1 & 4 & 0.333333 \\
+    face268 & 5 & 4 & 2 & 0.800000 \\
+    face269 & 4 & 2 & 6 & 0.500000 \\
+    face270 & 5 & 4 & 8 & 0.800000 \\
+    face271 & 1 & 0 & 10 & 0.000000 \\
+    face272 & 2 & 1 & 1 & 0.500000 \\
+    face273 & 2 & 0 & 7 & 0.000000 \\
+    face274 & 2 & 0 & 3 & 0.000000 \\
+    face275 & 5 & 2 & 7 & 0.400000 \\
+    face276 & 2 & 1 & 9 & 0.500000 \\
+    face277 & 1 & 0 & 1 & 0.000000 \\
+    face278 & 2 & 1 & 1 & 0.500000 \\
+    face279 & 5 & 0 & 3 & 0.000000 \\
+    face280 & 3 & 0 & 6 & 0.000000 \\
+    face281 & 5 & 2 & 7 & 0.400000 \\
+    face282 & 1 & 0 & 9 & 0.000000 \\
+    face283 & 2 & 1 & 5 & 0.500000 \\
+    face284 & 1 & 0 & 1 & 0.000000 \\
+    face285 & 1 & 0 & 4 & 0.000000 \\
+    face286 & 2 & 1 & 7 & 0.500000 \\
+    face287 & 3 & 0 & 10 & 0.000000 \\
+    face288 & 3 & 0 & 8 & 0.000000 \\
+    face289 & 3 & 0 & 2 & 0.000000 \\
+    face290 & 4 & 1 & 7 & 0.250000 \\
+    face291 & 4 & 3 & 5 & 0.750000 \\
+    face292 & 4 & 0 & 8 & 0.000000 \\
+    face293 & 5 & 4 & 1 & 0.800000 \\
+    face294 & 5 & 3 & 2 & 0.600000 \\
+    face295 & 4 & 0 & 3 & 0.000000 \\
+    face296 & 3 & 2 & 2 & 0.666667 \\
+    face297 & 3 & 1 & 10 & 0.333333 \\
+    face298 & 3 & 2 & 1 & 0.666667 \\
+    face299 & 1 & 0 & 3 & 0.000000 \\
+    face300 & 4 & 2 & 8 & 0.500000 \\
+    \hline
+    \end{tabular}
+  \end{center}
+  \caption{Wyniki dzia³ania rozpoznania twarzy dla zbioru testowego. Oznaczenia: $ q $ -- faktyczna iloœæ twarzy na zdjeciu, $ s $ -- iloœæ prawid³owo odnalezionych twarzy, $ w $ -- iloœæ obiektów rozpoznanych jako twarze, $ \frac{s}{q} $ -- skutecznoœæ badania.}
+\end{table}
+
+Œrednia skutecznoœæ sieci: 0.287777.
+
+\section{Obserwacje}
+
+Nauczone sieci wykazuja doœæ wysok¹ umijêtnoœæ rozpoznawania twarzy ( ok. 29\%), ich skutecznoœæ jest jednak znaczaco obnizona przez s³aba zdolnoœæ do odrzucania obiektów nie bedacych twarzami.
+
+
+Powody takiego zachowania mog¹ byæ ró¿ne:
+
+\begin{enumerate}
+  \item prezentowane sieci s¹ nie douczone, b¹dŸ to w wyniku prezentacji zbyt ma³ej iloœci wzorców, b¹dŸ to w wyniku nieprawid³owego podejœcia do problemu;
+  \item metoda okna przesuwnego zdjecia wybiera okna zawieraj¹ce twarze zbyt odleg³e od pozytywnych próbek ucz¹cych (przesuniêcie twarzy w oknie);
+  \item nie powiekszano zbioru ucz¹cego sieæ o sklasyfikowane przez sieæ próbki na badanych obrazach.
+\end{enumerate}
+
+\section{Wnioski}
+
+
+
+\begin{thebibliography}{0}
+  \bibitem{perceptron} K. Stokfiszewski
+    \textsl{Siec neuronowa typu wielowarstwowy perceptron i algorytm wstecznej propagacji b³edu.}, 2007, dostêpny
+  \bibitem{neuron} Danuta Rudkowska, Maciej Pilinski, Leszek Rutkowski.
+    \textsl{Sieci neuronowe, algorytmy genetyczne i systemy rozmyte}, Warszawa 1997.
+ 
+\end{thebibliography}
+
+\end{document}

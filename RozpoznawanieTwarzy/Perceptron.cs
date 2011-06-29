@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using AForge.Neuro;
 using AForge.Neuro.Learning;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace RozpoznawanieTwarzy
 {
+    [Serializable]
     class Perceptron
     {
         public double learningRate { get; set; }      // współczynnik uczenia
@@ -26,17 +32,19 @@ namespace RozpoznawanieTwarzy
          *   double [][] input  - tablica wektorów wejściowych
          *   double [][] output - tablica oczekiwanych wektorów wyjściowych
          */
-        public int Learn(double [][] input, double [][] output)
+        public int Learn(double [][] input, double [][] output, System.Windows.Forms.ToolStripProgressBar pb)
         {
             if (input.Length == output.Length)
             {
+                int max = 10000;
                 double samples = (double)input.Length;
+                pb.Value = 0; pb.Maximum = max;
                 this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input[0].Length, this.neuronsInFirstLayer, 1);
                 BackPropagationLearning teacher = new BackPropagationLearning(network);
                 teacher.LearningRate = this.learningRate;
                 teacher.Momentum = this.momentum;
                 int epoch = 0;
-                while (teacher.RunEpoch(input, output) / samples < this.errorRate) { epoch++; }
+                while (epoch < max) { pb.Value++; epoch++; }
                 return epoch;
             }
             else
@@ -52,6 +60,48 @@ namespace RozpoznawanieTwarzy
         public double [] Eval(double [] input)
         {
             return network.Compute(input);
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            Stream stream = null;
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+                formatter.Serialize(stream, 1);
+                formatter.Serialize(stream, this);
+            }
+            catch
+            {}
+            finally
+            {
+                if (null != stream)
+                    stream.Close();
+            }
+        }
+
+        public static Perceptron LoadFromFile(string fileName)
+        {
+            Stream stream = null;
+            Perceptron p = null;
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                int version = (int)formatter.Deserialize(stream);
+                p = (Perceptron)formatter.Deserialize(stream);
+            }
+            catch
+            {
+                // do nothing, just ignore any possible errors
+            }
+            finally
+            {
+                if (null != stream)
+                    stream.Close();
+            }
+            return p;
         }
     }
 }

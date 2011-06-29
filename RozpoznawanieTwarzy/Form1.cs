@@ -176,7 +176,8 @@ namespace RozpoznawanieTwarzy
             this.network.neuronsInFirstLayer = this.neuronsInFirstLayer;
             this.network.errorRate = this.errorRate;
             // uczenie sieci neuronowej
-            this.network.Learn(input, output);
+            this.network.Learn(input, output, this.toolStripProgressBar1);
+            this.saveNetworkToFileButton.Enabled = true;
             this.statusBarLabel.Text = "Sieć nauczona!";
             this.Cursor = Cursors.Default;
         }
@@ -223,6 +224,25 @@ namespace RozpoznawanieTwarzy
         private void sigmoidAlphaValueTextBox_TextChanged(object sender, EventArgs e)
         {
             enableLearnNetworkButton();
+        }
+
+        // ZAPIS I OCZYT SIECI NEURONOWEJ
+
+        private void loadNetworkFromFileButton_Click(object sender, EventArgs e)
+        {
+            if (this.loadNetworkFromFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.network = Perceptron.LoadFromFile(this.loadNetworkFromFileDialog.FileName);
+            }
+        }
+
+        private void saveNetworkToFileButton_Click(object sender, EventArgs e)
+        {
+            if (this.saveNetworkToFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.network.SaveToFile(this.saveNetworkToFileDialog.FileName);
+                this.saveNetworkToFileButton.Enabled = false;
+            }
         }
     }
 }
