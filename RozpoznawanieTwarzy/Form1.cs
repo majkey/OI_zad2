@@ -6,16 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
+using PatternMatching;
 
 namespace RozpoznawanieTwarzy
 {
     public partial class Form1 : Form
     {
-        Bitmap sourceBitmap;
         Perceptron network;
-        int frameHeight;
-        int frameWidth;
-        int frameStep;
         int neuronsInFirstLayer;
         double learningRate;
         double momentum;
@@ -23,9 +21,13 @@ namespace RozpoznawanieTwarzy
         double errorRate;
         public const int learningSampleWidth = 32;
         public const int learningSampleHeight = 32;
+        protected ArrayList matchs;
+        protected NNPatternCheckEditor editor;
+        protected PMImage img = null;
 
         public Form1()
         {
+            editor = new NNPatternCheckEditor();
             InitializeComponent();
             this.statusBarLabel.Text = "";
             this.network = new Perceptron();
@@ -39,46 +41,22 @@ namespace RozpoznawanieTwarzy
         {
             if (this.openImageDialog.ShowDialog() == DialogResult.OK)
             {
-                sourceBitmap = new Bitmap(this.openImageDialog.FileName);
-                this.pictureBox.Width = sourceBitmap.Width;
-                this.pictureBox.Height = sourceBitmap.Height;
-                this.pictureBox.Image = sourceBitmap;
+                this.img = new PMImage(this.openImageDialog.FileName);
+                this.matchs = null;
+                this.Refresh();
                 this.resetImageButton.Enabled = true;
-                enableFaceRecogniseButton();
+                if (this.img != null && this.editor.Nnpc != null)
+                {
+                    this.faceRecogniseButton.Enabled = true;
+                }
+                else
+                    this.faceRecogniseButton.Enabled = false;
             }
         }
 
         private void resetImageButton_Click(object sender, EventArgs e)
         {
-            this.pictureBox.Image = this.sourceBitmap;
-        }
-
-        // WALIDACJA PARAMETRÓW
-
-        private void enableFaceRecogniseButton()
-        {
-            if (int.TryParse(this.frameWidthTextBox.Text, out this.frameWidth) &&
-                int.TryParse(this.frameHeightTextBox.Text, out this.frameHeight) &&
-                int.TryParse(this.frameStepTextBox.Text, out this.frameStep) &&
-                this.pictureBox.Image != null)
-                this.faceRecogniseButton.Enabled = true;
-            else
-                this.faceRecogniseButton.Enabled = false;
-        }
-
-        private void frameHeightTextBox_TextChanged(object sender, EventArgs e)
-        {
-            enableFaceRecogniseButton();
-        }
-
-        private void frameWidthTextBox_TextChanged(object sender, EventArgs e)
-        {
-            enableFaceRecogniseButton();
-        }
-
-        private void frameStepTextBox_TextChanged(object sender, EventArgs e)
-        {
-            enableFaceRecogniseButton();
+            this.pictureBox.Image = this.img.FullImage;
         }
 
         // ROZPOZNAWANIE TWARZY
@@ -86,30 +64,33 @@ namespace RozpoznawanieTwarzy
         private void faceRecogniseButton_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-            ImageSupport imsu = new ImageSupport((Bitmap)this.pictureBox.Image);
-            imsu.sampleWidth = this.frameWidth;
-            imsu.sampleHeight = this.frameHeight;
-            imsu.offsetStep = this.frameStep;
-            imsu.learningSampleWidth = learningSampleWidth;
-            imsu.learningSampleHeight = learningSampleHeight;
-            double [] sample;
-            int x = 0;
-            int y = 0;
-            do
+            if (this.editor.Nnpc != null && this.img != null)
             {
-                while ((sample = imsu.GetLearningSample(x, y)) != null)
-                {
-                    if (Math.Abs(this.network.Eval(sample)[0] - 1) < this.learningRate * 2)
-                    {
-                        this.faceListBox.Items.Add("x = " + x.ToString() + "; y = " + y.ToString() + ";");
-                        imsu.DrawFrameOnResultImage(x, y);
-                    }
-                    x++;
-                }
-                x = 0; y++;
-            } while (sample != imsu.GetLearningSample(x, y));
-            this.pictureBox.Image = imsu.resultImage;
+                new System.Threading.Thread(new System.Threading.ThreadStart(serchingLearningThread)).Start();
+                this.matchs = this.editor.Nnpc.search(img);
+                refreshAll();
+                this.editor.Nnpc.Listener = null;
+                this.Refresh();
+            }
+            this.imagesListBox.Enabled = true;
             this.Cursor = Cursors.Default;
+        }
+
+        public void refreshAll()
+        {
+            string s;
+            this.faceListBox.Items.Clear();
+            if (this.matchs != null && this.editor.Nnpc != null)
+            {
+                PatternMatch pm;
+                for (int i = 0; i < matchs.Count; i++)
+                {
+                    pm = (PatternMatch)matchs[i];
+                    s = "Dopasowanie " + i + "; x = " + 8 * (pm.X / 8) + "; y = " + 8 * (pm.Y / 8) + ";";
+                    this.faceListBox.Items.Add(s);
+                }
+                this.statusBarLabel.Text = "Odnaleziono " + this.faceListBox.Items.Count + " obiektów.";
+            }
         }
 
         // =================================== UCZENIE SIECI ===================================
@@ -176,7 +157,7 @@ namespace RozpoznawanieTwarzy
             this.network.neuronsInFirstLayer = this.neuronsInFirstLayer;
             this.network.errorRate = this.errorRate;
             // uczenie sieci neuronowej
-            this.network.Learn(input, output, this.toolStripProgressBar1);
+            this.network.Learn(input, output);
             this.saveNetworkToFileButton.Enabled = true;
             this.statusBarLabel.Text = "Sieć nauczona!";
             this.Cursor = Cursors.Default;
@@ -230,10 +211,14 @@ namespace RozpoznawanieTwarzy
 
         private void loadNetworkFromFileButton_Click(object sender, EventArgs e)
         {
-            if (this.loadNetworkFromFileDialog.ShowDialog() == DialogResult.OK)
+            this.editor.OpenNeuralNetwork();
+            this.statusBarLabel.Text = "Sieć wczytana.";
+            if (this.img != null && this.editor.Nnpc != null)
             {
-                this.network = Perceptron.LoadFromFile(this.loadNetworkFromFileDialog.FileName);
+                this.faceRecogniseButton.Enabled = true;
             }
+            else
+                this.faceRecogniseButton.Enabled = false;
         }
 
         private void saveNetworkToFileButton_Click(object sender, EventArgs e)
@@ -242,6 +227,30 @@ namespace RozpoznawanieTwarzy
             {
                 this.network.SaveToFile(this.saveNetworkToFileDialog.FileName);
                 this.saveNetworkToFileButton.Enabled = false;
+                this.statusBarLabel.Text = "Sieć zapisana!";
+            }
+        }
+
+        public void serchingLearningThread()
+        {
+            SerachListenerFrame listen = new SerachListenerFrame();
+            editor.Nnpc.Listener = listen;
+            Application.Run(listen);
+        }
+
+        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            if (img != null && matchs == null)
+            {
+                Bitmap tmp = img.FullImage;
+                this.pictureBox.Image = tmp;
+                this.pictureBox.Size = tmp.Size;
+            }
+            else if (img != null && matchs != null)
+            {
+                Bitmap tmp = img.GetImageMatchs(matchs);
+                this.pictureBox.Image = tmp;
+                this.pictureBox.Size = tmp.Size;
             }
         }
     }

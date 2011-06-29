@@ -43,6 +43,18 @@
     <Reference Include="AForge.Neuro">
       <HintPath>..\neuro_src\Release\AForge.Neuro.dll</HintPath>
     </Reference>
+    <Reference Include="NeuralNetwork, Version=0.1.856.42693, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\neuro_src\Release\NeuralNetwork.dll</HintPath>
+    </Reference>
+    <Reference Include="NeuralNetworkGUI, Version=1.0.856.42695, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\neuro_src\Release\NeuralNetworkGUI.dll</HintPath>
+    </Reference>
+    <Reference Include="PaternMaching, Version=1.0.4197.41176, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\neuro_src\Release\PaternMaching.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

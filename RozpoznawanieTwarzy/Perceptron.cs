@@ -32,19 +32,17 @@ namespace RozpoznawanieTwarzy
          *   double [][] input  - tablica wektorów wejściowych
          *   double [][] output - tablica oczekiwanych wektorów wyjściowych
          */
-        public int Learn(double [][] input, double [][] output, System.Windows.Forms.ToolStripProgressBar pb)
+        public int Learn(double [][] input, double [][] output)
         {
             if (input.Length == output.Length)
             {
-                int max = 10000;
                 double samples = (double)input.Length;
-                pb.Value = 0; pb.Maximum = max;
                 this.network = new ActivationNetwork(new BipolarSigmoidFunction(this.sigmoidAlphaValue), input[0].Length, this.neuronsInFirstLayer, 1);
                 BackPropagationLearning teacher = new BackPropagationLearning(network);
                 teacher.LearningRate = this.learningRate;
                 teacher.Momentum = this.momentum;
                 int epoch = 0;
-                while (epoch < max) { pb.Value++; epoch++; }
+                while (teacher.RunEpoch(input, output) < this.errorRate) { epoch++; }
                 return epoch;
             }
             else

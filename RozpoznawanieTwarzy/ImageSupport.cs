@@ -164,7 +164,27 @@ namespace RozpoznawanieTwarzy
         */
         public void DrawFrameOnResultImage(int xOffset, int yOffset)
         {
-            this.resultImage = DrawFrame(xOffset, yOffset);
+            Bitmap result = this.resultImage;
+            if (xOffset * this.offsetStep + this.sampleWidth <= this.image.Width &&
+                yOffset * this.offsetStep + this.sampleHeight <= this.image.Height)
+            {
+                for (int i = 0; i < this.sampleWidth; i++)
+                {
+                    Color color = Color.Black;
+                    result.SetPixel(xOffset * this.offsetStep + i, yOffset * this.offsetStep, color);
+                    result.SetPixel(xOffset * this.offsetStep + i, yOffset * this.offsetStep + this.sampleHeight, color);
+                }
+                for (int j = 0; j < this.sampleHeight; j++)
+                {
+                    Color color;
+                    if (j % 2 == 0)
+                        color = Color.Black;
+                    else
+                        color = Color.White;
+                    result.SetPixel(xOffset * this.offsetStep, yOffset * this.offsetStep + j, color);
+                    result.SetPixel(xOffset * this.offsetStep + this.sampleWidth, yOffset * this.offsetStep + j, color);
+                }
+            }
         }
 
         /*
