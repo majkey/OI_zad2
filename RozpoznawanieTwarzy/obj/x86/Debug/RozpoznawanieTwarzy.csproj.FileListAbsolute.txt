@@ -37,3 +37,18 @@ C:\Users\majkey\Desktop\New folder\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\Gen
 C:\Users\majkey\Desktop\New folder\OI_zad2\RozpoznawanieTwarzy\bin\Debug\NeuralNetwork.dll
 C:\Users\majkey\Desktop\New folder\OI_zad2\RozpoznawanieTwarzy\bin\Debug\NeuralNetworkGUI.dll
 C:\Users\majkey\Desktop\New folder\OI_zad2\RozpoznawanieTwarzy\bin\Debug\PaternMaching.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.exe
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.pdb
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\RozpoznawanieTwarzy.exe
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\RozpoznawanieTwarzy.pdb
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.Controls.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\AForge.Neuro.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\NeuralNetwork.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\NeuralNetworkGUI.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\bin\Debug\PaternMaching.dll
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.Form1.resources
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\RozpoznawanieTwarzy.Properties.Resources.resources
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\majkey\Desktop\OI_zad2\RozpoznawanieTwarzy\obj\x86\Debug\GenerateResource.write.1.tlog
